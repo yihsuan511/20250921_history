@@ -150,36 +150,71 @@
           
           const header = document.createElement('h3');
           header.textContent = `訂單編號 #${order.id} | 下單時間: ${formatDate(order.created_at)} | 總金額: $${order.total_price}`;
-          div.appendChild(header);
-          
-          const details = document.createElement('div');
-          details.className = "order-details";
-          
-          let detailsHtml = `<p>桌號 / 外帶: ${order.table_number}</p>`;
-          detailsHtml += `<p>狀態: ${getStatusText(order.status)}</p>`;
-          
-          if (order.items && Array.isArray(order.items)) {
-            detailsHtml += '<p><strong>訂單明細:</strong></p><ul>';
-            order.items.forEach(item => {
-              const itemName = item.item_name || item.name || '未知項目';
-              const quantity = item.quantity || 1;
-              const price = item.price || 0;
-              detailsHtml += `<li>${itemName} x ${quantity} ($${price})</li>`;
-            });
-            detailsHtml += '</ul>';
-          }
-          
-          details.innerHTML = detailsHtml;
-          div.appendChild(details);
-          
-          // 點擊展開/收合
-          header.addEventListener("click", () => {
-            const isVisible = details.style.display === "block";
-            details.style.display = isVisible ? "none" : "block";
-            header.style.cursor = "pointer";
-          });
-          
-          container.appendChild(div);
+
+// 建立按鈕
+const toggleBtn = document.createElement("button");
+toggleBtn.textContent = "查看明細 ▼";
+toggleBtn.style.marginLeft = "10px";
+toggleBtn.style.fontSize = "16px";
+
+// 點擊按鈕切換展開/收合
+toggleBtn.addEventListener("click", () => {
+  const isVisible = details.style.display === "block";
+  details.style.display = isVisible ? "none" : "block";
+  toggleBtn.textContent = isVisible ? "查看明細 ▼" : "收合明細 ▲";
+});
+
+// 把按鈕加到 header
+header.appendChild(toggleBtn);
+div.appendChild(header);
+
+// 明細區域
+const details = document.createElement("div");
+details.className = "order-details";
+details.style.display = "none"; // 預設隱藏
+
+let detailsHtml = `<p>桌號 / 外帶: ${order.table_number}</p>`;
+detailsHtml += `<p>狀態: ${getStatusText(order.status)}</p>`;
+
+if (order.items && Array.isArray(order.items)) {
+  detailsHtml += '<p><strong>訂單明細:</strong></p><ul>';
+  order.items.forEach(item => {
+    const itemName = item.item_name || item.name || '未知項目';
+    const quantity = item.quantity || 1;
+    const price = item.price || 0;
+    detailsHtml += `<li>${itemName} x ${quantity} ($${price})</li>`;
+  });
+  detailsHtml += '</ul>';
+}
+
+details.innerHTML = detailsHtml;
+const reorderBtn = document.createElement("button");
+reorderBtn.textContent = "再次訂購";
+reorderBtn.style.display = "block";
+reorderBtn.style.marginTop = "15px";
+reorderBtn.style.fontSize = "16px";
+reorderBtn.style.padding = "8px 16px";
+reorderBtn.style.backgroundColor = "#66b";
+reorderBtn.style.color = "white";
+reorderBtn.style.border = "none";
+reorderBtn.style.borderRadius = "5px";
+reorderBtn.style.cursor = "pointer";
+
+// 點擊事件
+reorderBtn.addEventListener("click", () => {
+  alert(`訂單 #${order.id} 已再次加入購物車！`);
+  // 這裡你可以改成呼叫 API，把這筆訂單重新送出
+});
+
+// ✅ 把按鈕加到明細最後面
+details.appendChild(reorderBtn);
+
+
+div.appendChild(details);
+
+// 最後把整張卡片加入
+container.appendChild(div);
+
         });
 
       } catch (err) {
@@ -191,4 +226,3 @@ window.onload = loadOrders;
   </script>
 </body>
 </html>
-
