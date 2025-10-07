@@ -200,13 +200,17 @@ reorderBtn.style.border = "none";
 reorderBtn.style.borderRadius = "5px";
 reorderBtn.style.cursor = "pointer";
 
-// 點擊事件
 reorderBtn.addEventListener("click", () => {
-  alert(`訂單 #${order.id} 已再次加入購物車！`);
-  // 這裡你可以改成呼叫 API，把這筆訂單重新送出
+  // 把餐點存到 localStorage
+  localStorage.setItem("reorderItems", JSON.stringify(order.items));
+
+  console.log("已存入 localStorage:", order.items); // debug
+
+  // 跳轉到點餐頁 (內用預約)
+  window.location.href = "內用預約.html";
 });
 
-// ✅ 把按鈕加到明細最後面
+// 加到明細最下面
 details.appendChild(reorderBtn);
 
 
