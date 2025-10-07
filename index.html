@@ -200,20 +200,13 @@ reorderBtn.style.border = "none";
 reorderBtn.style.borderRadius = "5px";
 reorderBtn.style.cursor = "pointer";
 
+// 點擊事件
 reorderBtn.addEventListener("click", () => {
-  localStorage.setItem("reorderItems", JSON.stringify(order.items));
-
-  // 根據訂單類型決定要去哪一頁
-  if (order.table_number === "tableNumber") {
-    window.location.href = "https://two0250811-1.onrender.com/";
-  } else if (order.table_number === "外帶") {
-    window.location.href = "https://two0250826-takeoutweb.onrender.com/";
-  } else {
-    alert("無法判斷訂單類型，請手動選擇內用或外帶。");
-  }
+  alert(`訂單 #${order.id} 已再次加入購物車！`);
+  // 這裡你可以改成呼叫 API，把這筆訂單重新送出
 });
 
-// 加到明細最下面
+// ✅ 把按鈕加到明細最後面
 details.appendChild(reorderBtn);
 
 
