@@ -201,13 +201,16 @@ reorderBtn.style.borderRadius = "5px";
 reorderBtn.style.cursor = "pointer";
 
 reorderBtn.addEventListener("click", () => {
-  // 把餐點存到 localStorage
   localStorage.setItem("reorderItems", JSON.stringify(order.items));
 
-  console.log("已存入 localStorage:", order.items); // debug
-
-  // 跳轉到點餐頁 (內用預約)
-  window.location.href = "內用預約.html";
+  // 根據訂單類型決定要去哪一頁
+  if (order.table_number === "tableNumber") {
+    window.location.href = "https://two0250811-1.onrender.com/";
+  } else if (order.table_number === "外帶") {
+    window.location.href = "https://two0250826-takeoutweb.onrender.com/";
+  } else {
+    alert("無法判斷訂單類型，請手動選擇內用或外帶。");
+  }
 });
 
 // 加到明細最下面
