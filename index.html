@@ -226,23 +226,19 @@ reorderBtn.style.borderRadius = "5px";
 reorderBtn.style.cursor = "pointer";
 
 reorderBtn.addEventListener("click", () => {
-  // 將訂單資料轉成 Base64
   const itemsJson = JSON.stringify(order.items);
   const itemsBase64 = btoa(unescape(encodeURIComponent(itemsJson)));
-  
-  // 🔥 關鍵修正:根據訂單的 table_number 判斷是內用還是外帶
-  const isInStore = order.table_number !== "外帶"; // 如果不是"外帶"就是內用
-  
+
+  // 依照使用者進入歷史訂單的來源決定跳轉
+  const source = localStorage.getItem("historySource"); // 在外帶/內用頁面都有設置
   let targetUrl;
-  if (isInStore) {
-    targetUrl = `https://two0250811-1.onrender.com?reorder=${itemsBase64}`;
-  } else {
+
+  if (source === "外帶") {
     targetUrl = `https://two0250826-takeoutweb.onrender.com?reorder=${itemsBase64}`;
+  } else {
+    targetUrl = `https://two0250811-1.onrender.com?reorder=${itemsBase64}`;
   }
-  
-  console.log('跳轉到:', targetUrl);
-  console.log('訂單桌號:', order.table_number, '是內用:', isInStore);
-  
+
   window.location.href = targetUrl;
 });
 
