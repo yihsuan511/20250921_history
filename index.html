@@ -227,7 +227,7 @@ reorderBtn.style.cursor = "pointer";
 
 reorderBtn.addEventListener("click", () => {
   const itemsJson = JSON.stringify(order.items);
-  const itemsBase64 = btoa(unescape(encodeURIComponent(itemsJson)));
+  const itemsBase64 = encodeURIComponent(btoa(unescape(encodeURIComponent(itemsJson))));
 
   // 依照使用者進入歷史訂單的來源決定跳轉
   const source = localStorage.getItem("historySource"); // 在外帶/內用頁面都有設置
