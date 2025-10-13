@@ -208,12 +208,11 @@
            console.log("已存入 localStorage:", order.items); // debug
 
             // 根據訂單類型決定要去哪一頁
-            if (order.table_number === "tableNumber") {
-              window.location.href = "https://two0250811-1.onrender.com";
-            } else if (order.table_number === "外帶") {
+            if (order.table_number === "外帶") {
               window.location.href = "https://two0250826-takeoutweb.onrender.com";
-            } else {
-              alert("無法判斷訂單類型，請手動選擇內用或外帶。");
+            }  else {
+              window.location.href = "https://two0250811-1.onrender.com";
+              // alert("無法判斷訂單類型，請手動選擇內用或外帶。");
             }
           });
           // 加到明細最下面
