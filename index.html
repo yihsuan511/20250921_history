@@ -228,17 +228,20 @@ reorderBtn.style.cursor = "pointer";
 
 
 reorderBtn.addEventListener("click", () => {
-  // 把餐點存到 localStorage
-  localStorage.setItem("reorderItems", JSON.stringify(order.items));
-  console.log("已存入 localStorage:", order.items);
-
+  // 將訂單資料轉成 Base64 編碼(避免 URL 特殊字元問題)
+  const itemsJson = JSON.stringify(order.items);
+  const itemsBase64 = btoa(unescape(encodeURIComponent(itemsJson)));
+  
   const source = localStorage.getItem("historySource");
-
-        if (source === "內用") {
-            window.location.href = "https://two0250811-1.onrender.com";
-        } else {
-            window.location.href = "https://two0250826-takeoutweb.onrender.com";
-        }
+  
+  let targetUrl;
+  if (source === "內用") {
+    targetUrl = `https://two0250811-1.onrender.com?reorder=${itemsBase64}`;
+  } else {
+    targetUrl = `https://two0250826-takeoutweb.onrender.com?reorder=${itemsBase64}`;
+  }
+  
+  window.location.href = targetUrl;
 });
 
 // 加到明細最下面
