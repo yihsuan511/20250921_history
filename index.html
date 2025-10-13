@@ -232,19 +232,13 @@ reorderBtn.addEventListener("click", () => {
   localStorage.setItem("reorderItems", JSON.stringify(order.items));
   console.log("已存入 localStorage:", order.items);
 
-  reorderBtn.addEventListener("click", () => {
-        // 把餐點存到 localStorage
-        localStorage.setItem("reorderItems", JSON.stringify(order.items));
-        console.log("已存入 localStorage:", order.items);
-
-        const source = localStorage.getItem("historySource");
+  const source = localStorage.getItem("historySource");
 
         if (source === "內用") {
             window.location.href = "https://two0250811-1.onrender.com";
         } else {
             window.location.href = "https://two0250826-takeoutweb.onrender.com";
         }
-    });
 });
 
 // 加到明細最下面
