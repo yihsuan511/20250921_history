@@ -232,15 +232,19 @@ reorderBtn.addEventListener("click", () => {
   localStorage.setItem("reorderItems", JSON.stringify(order.items));
   console.log("已存入 localStorage:", order.items);
 
-  // 取得上次所在頁面
-  const lastPage = sessionStorage.getItem("lastPage");
+  reorderBtn.addEventListener("click", () => {
+        // 把餐點存到 localStorage
+        localStorage.setItem("reorderItems", JSON.stringify(order.items));
+        console.log("已存入 localStorage:", order.items);
 
-  // 根據記錄跳轉回原頁面，若沒有記錄就預設回內用.html
-  if (lastPage) {
-    window.location.href = lastPage;
-  } else {
-    window.location.href = "https://two0250811-1.onrender.com";
-  }
+        const source = localStorage.getItem("historySource");
+
+        if (source === "內用") {
+            window.location.href = "內用預約.html";
+        } else {
+            window.location.href = "外帶.html";
+        }
+    });
 });
 
 // 加到明細最下面
