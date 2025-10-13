@@ -212,7 +212,6 @@ if (order.items && Array.isArray(order.items)) {
  detailsHtml += '</ul>';
 }
 
-
 details.innerHTML = detailsHtml;
 const reorderBtn = document.createElement("button");
 reorderBtn.textContent = "再次訂購";
@@ -226,20 +225,23 @@ reorderBtn.style.border = "none";
 reorderBtn.style.borderRadius = "5px";
 reorderBtn.style.cursor = "pointer";
 
-
 reorderBtn.addEventListener("click", () => {
-  // 將訂單資料轉成 Base64 編碼(避免 URL 特殊字元問題)
+  // 將訂單資料轉成 Base64
   const itemsJson = JSON.stringify(order.items);
   const itemsBase64 = btoa(unescape(encodeURIComponent(itemsJson)));
   
-  const source = localStorage.getItem("historySource");
+  // 🔥 關鍵修正:根據訂單的 table_number 判斷是內用還是外帶
+  const isInStore = order.table_number !== "外帶"; // 如果不是"外帶"就是內用
   
   let targetUrl;
-  if (source === "內用") {
+  if (isInStore) {
     targetUrl = `https://two0250811-1.onrender.com?reorder=${itemsBase64}`;
   } else {
     targetUrl = `https://two0250826-takeoutweb.onrender.com?reorder=${itemsBase64}`;
   }
+  
+  console.log('跳轉到:', targetUrl);
+  console.log('訂單桌號:', order.table_number, '是內用:', isInStore);
   
   window.location.href = targetUrl;
 });
@@ -262,4 +264,3 @@ window.onload = loadOrders;
  </script>
 </body>
 </html>
-
