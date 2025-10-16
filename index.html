@@ -212,7 +212,9 @@
 
           reorderBtn.addEventListener("click", () => {
             const itemsJson = JSON.stringify(order.items);
+            console.log("原始 JSON:", itemsJson);
             const itemsBase64 = encodeURIComponent(btoa(unescape(encodeURIComponent(itemsJson))));
+            console.log("Base64:", itemsBase64);
 
             // ✅ 改成依照使用者進入歷史訂單的來源決定跳轉
             const urlParams = new URLSearchParams(window.location.search);
