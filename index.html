@@ -148,6 +148,7 @@
           }
 
           data.orders.forEach(order => {
+           console.log("這筆訂單的 items:", order.items);
             const div = document.createElement('div');
             div.className = "order-card";
               
