@@ -214,7 +214,7 @@
             const itemsBase64 = encodeURIComponent(btoa(unescape(encodeURIComponent(itemsJson))));
 
             // ✅ 改成依照使用者進入歷史訂單的來源決定跳轉
-            const source = localStorage.getItem("historySource") || "內用"; // 在外帶/內用頁面都有設置
+            const source = localStorage.getItem("historySource") || "外帶"; // 在外帶/內用頁面都有設置
             let targetUrl;
 
             if (source === "外帶") {
