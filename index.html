@@ -225,6 +225,8 @@
               window.location.href = targetUrl;
           });
 
+          console.log("歷史訂單來源:", localStorage.getItem("historySource"));
+
           // 加到明細最下面
           details.appendChild(reorderBtn);
           div.appendChild(details);
