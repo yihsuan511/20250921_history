@@ -224,37 +224,9 @@
             }
 
             const itemsBase64 = utf8ToBase64Url(itemsJson);
-            
-            function base64UrlToUtf8(base64Url) {
-                // 先還原成標準 Base64
-                let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                // 補回缺少的 '='
-                while (base64.length % 4) {
-                    base64 += '=';
-                }
-                const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
-                return new TextDecoder().decode(bytes);
-            }
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const reorderParam = urlParams.get('reorder');
-
-            if (reorderParam) {
-                try {
-                    const decoded = base64UrlToUtf8(reorderParam);
-                    const items = JSON.parse(decoded);
-                    items.forEach(item => addTakeoutItemToCart(item));
-                    renderCart();
-                    alert("已將歷史訂單加入購物車（外帶）！");
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                } catch (e) {
-                    console.error("讀取 URL reorder 資料失敗", e);
-                    alert("讀取歷史訂單失敗，請重新點餐。");
-                }
-            }
 
             // ✅ 改成依照使用者進入歷史訂單的來源決定跳轉
-            // const urlParams = new URLSearchParams(window.location.search);
+            const urlParams = new URLSearchParams(window.location.search);
             const source = urlParams.get('source') || "內用"; // 在外帶/內用頁面都有設置
             let targetUrl;
 
